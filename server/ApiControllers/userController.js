@@ -7,6 +7,7 @@ var token = require('../fn/token');
 
 var router = express.Router();
 
+// thêm người dùng
 router.post('/adduser', (req, res) => {
     var fullName = req.body.fullName;
     var cmnd = req.body.cmnd;
@@ -41,7 +42,7 @@ router.post('/adduser', (req, res) => {
                     console.log(err);
                     res.json({msg: "View error on console log"});
                 } else {
-                    userModel.find(function (err, users) {
+                    userModel.findOne({email: email}, function (err, users) {
                         console.log(users);
                         res.json({users: users});
                     })
@@ -51,6 +52,7 @@ router.post('/adduser', (req, res) => {
     });
 });
 
+//login người dùng
 router.post('/login', (req, res) => {
     var md5_pwd = String(md5(req.body.password));
     userModel.findOne({
@@ -80,6 +82,7 @@ router.post('/login', (req, res) => {
             })
         }else{
             res.json({
+                auth: false,
                 msg: "Email or Password not true !!!",
             });
             return;
