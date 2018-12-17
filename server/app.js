@@ -8,6 +8,7 @@ var express = require('express'),
 var dbConnection = require('./fn/db');
 var verifyAccessToken = require('./fn/token').verifyAccessToken;
 var userController = require('./ApiControllers/userController');
+var employeeController = require('./ApiControllers/employeeController');
 
 mongoose.connect(dbConnection.database);
 
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({extend: false}));
 app.use(cors());
 
 app.use('/userController',userController);
+app.use('/employeeController',employeeController);
 
 var PORT = process.env.PORT || 3000;
 
