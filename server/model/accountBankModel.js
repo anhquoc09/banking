@@ -1,7 +1,18 @@
 var mongoose = require('mongoose');
 
-var accountBank = mongoose.Schema({
-
+var accountBankSchema = mongoose.Schema({
+    idUser:{
+        type: String,
+        required: true,
+    },
+    accountBankNo: {
+        type: String,
+        required: true
+    },
+    money: {
+        type: Number,
+        default: 0
+    }
 });
 
-module.exports = accountBank;
+var accountBankModel = module.exports = mongoose.model('accountBank',accountBankSchema);

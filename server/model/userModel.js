@@ -19,7 +19,6 @@ var userSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    accountBank : [accountBank],
     phoneNumber: {
         type: String,
         required: true
