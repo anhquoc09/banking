@@ -9,6 +9,7 @@ var dbConnection = require('./fn/db');
 var verifyAccessToken = require('./fn/token').verifyAccessToken;
 var userController = require('./ApiControllers/userController');
 var employeeController = require('./ApiControllers/employeeController');
+var transactionController = require('./ApiControllers/transactionController');
 
 mongoose.connect(dbConnection.database);
 
@@ -28,6 +29,7 @@ app.use(cors());
 
 app.use('/userController',userController);
 app.use('/employeeController',employeeController);
+app.use('/transactionController',transactionController);
 
 var PORT = process.env.PORT || 3000;
 

@@ -1,5 +1,6 @@
 var express = require('express');
 var userModel = require('../model/userModel'),
+    accountBankModel = require('../model/accountBankModel'),
     md5 = require('crypto-js/md5'),
     moment = require('moment');
 
@@ -13,7 +14,6 @@ router.post('/adduser', (req, res) => {
     var cmnd = req.body.cmnd;
     var email = req.body.email;
     var password = req.body.password;
-    var accountBank = [];
     var phoneNumber = req.body.phoneNumber;
     var createDate = moment().format();
 
@@ -32,7 +32,6 @@ router.post('/adduser', (req, res) => {
                 idUser: cmnd,
                 email: email,
                 password: md5(password),
-                accountBank: accountBank,
                 phoneNumber: phoneNumber,
                 createDate: createDate,
             });
