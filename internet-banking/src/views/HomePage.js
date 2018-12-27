@@ -5,16 +5,19 @@ import { connect } from 'react-redux';
 import { login } from '../actions/auth';
 
 class HomePage extends React.Component {
-    submit = data => this.props.login(data).then(() => this.props.history.push("/user"));
+    submit = data => this.props.login(data).then(() => {
+        console.log(data);
+        if (this.props.user.permission === 0) {
+            this.props.history.push("/user")
+        }else{
+            this.props.history.push("/admin")
+        }
+    });
 
     render() {
-        const {history} = this.props;
-
-        console.log(this.props);
-        console.log(history);
         return (
-            <div>
-                <h1>Home Page</h1>
+            <div  className="ui container">
+                <h1>QS BANK</h1>
                 <LoginForm submit={this.submit}/>
             </div>
         );
@@ -28,4 +31,10 @@ HomePage.propTypes = {
     login: PropTypes.func.isRequired
 };
 
-export default connect(null, {login})(HomePage);
+function mapStateToProps(state) {
+    return {
+        user: state.user.user
+    }
+}
+
+export default connect(mapStateToProps, {login})(HomePage);

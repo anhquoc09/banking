@@ -8,8 +8,11 @@ class LoginForm extends React.Component {
     state = {
         data: {
             email: "",
-            password: ""
+            password: "",
         },
+        user: {},
+        refreshToken: "",
+        accessToken: "",
         loading: false,
         errors: {}
     };
@@ -27,9 +30,6 @@ class LoginForm extends React.Component {
                 .submit(this.state.data)
                 .catch(err => this.setState({errors: {msg: err.response.data.msg}, loading: false}));
         }
-        // if( success) {
-        //     set => state. success
-        // }
     };
 
     validate = data => {
@@ -41,11 +41,6 @@ class LoginForm extends React.Component {
 
     render() {
         const {data, errors, loading} = this.state;
-        // if(state.success) {
-        //     return (
-        //         <Redirect to="/user" />
-        //     )
-        // }
         return (
             <Form onSubmit={this.onSubmit} loading={loading}>
                 {errors.msg && (

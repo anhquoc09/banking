@@ -34,6 +34,7 @@ router.post('/adduser', (req, res) => {
                 password: md5(password),
                 phoneNumber: phoneNumber,
                 createDate: createDate,
+                permission: 0
             });
 
             user.save(function (err) {

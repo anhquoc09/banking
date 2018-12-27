@@ -6,19 +6,19 @@ import * as actions from '../../actions/auth';
 import {connect} from 'react-redux';
 import gravatarUrl from 'gravatar-url';
 
-class NavbarUser extends React.Component {
-    render() {
-        const {user, logout} = this.props;
+class NavbarAdmin extends React.Component{
+    render(){
+        const {user,logout} = this.props;
 
-        return (
+        return(
             <Menu secondary pointing>
-                <Menu.Item as={Link} to="/user">
+                <Menu.Item as={Link} to="/admin">
                     Home
                 </Menu.Item>
-                <Menu.Item as={Link} to="/user/showaccount">
-                    Xem Tài Khoản
+                <Menu.Item as={Link} to="/admin/adduser">
+                    Thêm người dùng
                 </Menu.Item>
-                <Menu.Item as={Link} to="/user/movemoney">
+                <Menu.Item as={Link} to="/admin/addaccount">
                     Chuyển khoản
                 </Menu.Item>
 
@@ -32,19 +32,19 @@ class NavbarUser extends React.Component {
                     </Dropdown>
                 </Menu.Menu>
             </Menu>
-        )
+        );
     }
 }
 
-NavbarUser.propsTypes = {
+NavbarAdmin.propsTypes = {
     user: PropsTypes.shape({email: PropsTypes.string.isRequired}).isRequired,
     logout: PropsTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
-    return {
+    return{
         user: state.user.user,
     };
 }
 
-export default connect(mapStateToProps, {logout: actions.logout})(NavbarUser);
+export default connect(mapStateToProps,{logout: actions.logout})(NavbarAdmin);

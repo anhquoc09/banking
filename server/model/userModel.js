@@ -30,6 +30,10 @@ var userSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
+    permission: {
+        type: Number,
+        default: 0
+    }
 });
 
 var User = module.exports = mongoose.model('User',userSchema);

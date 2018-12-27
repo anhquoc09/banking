@@ -64,7 +64,7 @@ exports.updateRefreshToken = (idUser, rfToken) => {
                   if (err) console.log(err);
               });
           }else{
-              var userToken = new rfToken({
+              var userToken = new refreshToken({
                   rfToken: rfToken,
                   createDate: moment().format('YYYY-MM-DD  HH:mm:ss'),
                   iduser: idUser
