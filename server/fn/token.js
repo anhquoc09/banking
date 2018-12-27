@@ -2,7 +2,7 @@ var jwt = require('jsonwebtoken'),
     rndToken = require('rand-token'),
     moment = require('moment'),
     lodash = require('lodash'),
-    rfToken = require('../model/refreshTokenModel');
+    refreshToken = require('../model/refreshTokenModel');
 
 const SECRETKEY = 'ANSON';
 const AC_LIFETIME = 30000;
@@ -56,7 +56,7 @@ exports.generateRefreshToken = () => {
 
 exports.updateRefreshToken = (idUser, rfToken) => {
     return new Promise((resolve, reject) => {
-        rfToken.findOne({iduser: idUser}).exec((err, user) => {
+        refreshToken.findOne({iduser: idUser}).exec((err, user) => {
           if(user){
               user.createDate = moment().format('YYYY-MM-DD HH:mm:ss');
               user.rfToken = rfToken;

@@ -31,7 +31,7 @@ app.use('/userController',userController);
 app.use('/employeeController',employeeController);
 app.use('/transactionController',transactionController);
 
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
     console.log(`API running on PORT ${PORT}`);
