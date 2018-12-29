@@ -6,7 +6,6 @@ import { login } from '../actions/auth';
 
 class HomePage extends React.Component {
     submit = data => this.props.login(data).then(() => {
-        console.log(data);
         if (this.props.user.permission === 0) {
             this.props.history.push("/user")
         }else{

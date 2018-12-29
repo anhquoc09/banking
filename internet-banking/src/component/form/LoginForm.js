@@ -1,5 +1,5 @@
 import React from 'react';
-import Protypes from 'prop-types';
+import PropsTypes from 'prop-types';
 import {Form, Button, Message} from "semantic-ui-react";
 import Validator from 'validator';
 import InlineError from "../messages/InlineError";
@@ -70,7 +70,7 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-    submit: Protypes.func.isRequired
+    submit: PropsTypes.func.isRequired
 };
 
 export default LoginForm;

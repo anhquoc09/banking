@@ -1,9 +1,9 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 import {connect} from 'react-redux';
-import NavbarAdmin from '../component/admin/navbarAdmin';
+import NavbarAdmin from './navbarAdmin';
 
-class AdminPage extends React.Component {
+class AddAccountPageAdmin extends React.Component {
 
     render() {
         return (
@@ -14,7 +14,7 @@ class AdminPage extends React.Component {
     }
 }
 
-AdminPage.propsTypes = {
+AddAccountPageAdmin.propsTypes = {
     isAuthenticated: PropsTypes.bool.isRequired,
     logout: PropsTypes.func.isRequired,
     location: PropsTypes.shape({
@@ -25,9 +25,8 @@ AdminPage.propsTypes = {
 function mapStateToProps(state) {
     return {
         user: state.user.user,
-        refreshToken: state.user.refreshToken,
         isAuthenticated: !!state.user.refreshToken
     }
 }
 
-export default connect(mapStateToProps)(AdminPage);
+export default connect(mapStateToProps)(AddAccountPageAdmin);
