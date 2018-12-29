@@ -8,5 +8,11 @@ export default {
         signup: user =>
             axios.post("/userController/adduser",{user}).then(res=>res.data.user),
 
+        addAccountBank: account =>
+            axios.post("/userController/addaccountbank",{account}).then(res=>res.data.account),
+
+        addMoney: account =>
+            axios.post("/userController/addmoney",{account}).then(res=>res.data.account),
+
     }
 }

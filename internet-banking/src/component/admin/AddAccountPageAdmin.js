@@ -2,13 +2,21 @@ import React from 'react';
 import PropsTypes from 'prop-types';
 import {connect} from 'react-redux';
 import NavbarAdmin from './navbarAdmin';
+import AddAccountBankForm from '../form/AddAccountBankForm';
+import {addAccountBank} from '../../actions/auth';
 
 class AddAccountPageAdmin extends React.Component {
+
+    submit = dataAccount =>
+        this.props.addAccountBank(dataAccount).then(()=>{
+            this.props.history.push("/admin/home")
+        });
 
     render() {
         return (
             <div className="ui container">
                 <NavbarAdmin />
+                <AddAccountBankForm submit={this.submit}/>
             </div>
         )
     }
@@ -29,4 +37,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(AddAccountPageAdmin);
+export default connect(mapStateToProps,{addAccountBank})(AddAccountPageAdmin);

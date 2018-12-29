@@ -12,6 +12,8 @@ import AddUserPageAdmin from "./component/admin/AddUserPageAdmin";
 import AddUserRoute from "./component/admin/route/AddUserRoute";
 import AddAccountRoute from "./component/admin/route/AddAccountRoute";
 import AddAccountPageAdmin from "./component/admin/AddAccountPageAdmin";
+import AddMoneyRoute from "./component/admin/route/AddMoneyRoute";
+import AddMoneyPageAdmin from "./component/admin/AddMoneyPageAdmin";
 
 const App = ({location}) => (
     <div>
@@ -21,6 +23,7 @@ const App = ({location}) => (
         <HomePageAdminRoute location={location} path="/admin/home" exact component={HomePageAdmin}/>
         <AddUserRoute location={location} path="/admin/adduser" exact component={AddUserPageAdmin}/>
         <AddAccountRoute location={location} path="/admin/addaccount" exact component={AddAccountPageAdmin}/>
+        <AddMoneyRoute location={location} path="/admin/addmoney" exact component={AddMoneyPageAdmin}/>
     </div>
 );
 

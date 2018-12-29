@@ -1,5 +1,5 @@
-import {USER_LOGGED_IN, USER_LOGGED_OUT} from '../types';
-import api from '../api';
+import {USER_LOGGED_IN, USER_LOGGED_OUT, ADD_USER,ADD_ACCOUNT_BANK,ADD_MONEY} from '../types';
+import api from '../api'
 
 let userLoggin = {};
 
@@ -13,7 +13,17 @@ export const userLoggedOut = () => ({
 });
 
 export const adduser = user => ({
-    type: "ADD_USER",
+    type: ADD_USER,
+    user
+});
+
+export const userAddAccountBank = user => ({
+   type: ADD_ACCOUNT_BANK,
+   user
+});
+
+export const userAddMoney = user => ({
+    type: ADD_MONEY,
     user
 });
 
@@ -34,3 +44,14 @@ export const logout = () => dispatch => {
     localStorage.removeItem("refreshToken");
     dispatch(userLoggedOut());
 };
+
+export const addAccountBank = infoAccount => dispatch =>
+    api.user.addAccountBank(infoAccount).then(account=>{
+        dispatch(userAddAccountBank(userLoggin))
+    });
+
+export const addMoney = infoAccount => dispatch =>
+    api.user.addMoney(infoAccount).then(account=>{
+       dispatch(userAddMoney(userLoggin))
+    });
+

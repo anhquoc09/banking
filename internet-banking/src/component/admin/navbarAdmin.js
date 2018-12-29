@@ -23,6 +23,9 @@ class NavbarAdmin extends React.Component {
                     <Menu.Item name='addacount' as={Link} to="/admin/addaccount">
                         Thêm Tài Khoản
                     </Menu.Item>
+                    <Menu.Item name='addmoney' as={Link} to="/admin/addmoney">
+                        Nạp tiền
+                    </Menu.Item>
 
                     <Menu.Menu position="right">
                         <Dropdown trigger={<Image avatar src={gravatarUrl(user.email)}/>}>
