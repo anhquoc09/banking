@@ -1,5 +1,5 @@
-import {USER_LOGGED_IN, USER_LOGGED_OUT, ADD_USER,ADD_ACCOUNT_BANK,ADD_MONEY} from '../types';
-import api from '../api'
+import {USER_LOGGED_IN, USER_LOGGED_OUT, ADD_USER, ADD_ACCOUNT_BANK, ADD_MONEY, ADD_TRANSACTION} from '../types';
+import api from '../api';
 
 let userLoggin = {};
 
@@ -18,12 +18,17 @@ export const adduser = user => ({
 });
 
 export const userAddAccountBank = user => ({
-   type: ADD_ACCOUNT_BANK,
-   user
+    type: ADD_ACCOUNT_BANK,
+    user
 });
 
 export const userAddMoney = user => ({
     type: ADD_MONEY,
+    user
+});
+
+export const userAddTransaction = user => ({
+    type: ADD_TRANSACTION,
     user
 });
 
@@ -36,7 +41,6 @@ export const login = credentials => dispatch =>
 
 export const regist = credentials => dispatch =>
     api.user.signup(credentials).then(user => {
-        // localStorage.refreshToken = refreshToken;
         dispatch(adduser(userLoggin));
     });
 
@@ -46,12 +50,17 @@ export const logout = () => dispatch => {
 };
 
 export const addAccountBank = infoAccount => dispatch =>
-    api.user.addAccountBank(infoAccount).then(account=>{
+    api.user.addAccountBank(infoAccount).then(account => {
         dispatch(userAddAccountBank(userLoggin))
     });
 
 export const addMoney = infoAccount => dispatch =>
-    api.user.addMoney(infoAccount).then(account=>{
-       dispatch(userAddMoney(userLoggin))
+    api.user.addMoney(infoAccount).then(account => {
+        dispatch(userAddMoney(userLoggin))
+    });
+
+export const addTransaction = dataTransaction => dispatch =>
+    api.user.addTransaction(dataTransaction).then(result => {
+        dispatch(userAddTransaction(userLoggin))
     });
 

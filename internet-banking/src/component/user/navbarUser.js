@@ -12,7 +12,7 @@ class NavbarUser extends React.Component {
 
         return (
             <Menu secondary pointing>
-                <Menu.Item as={Link} to="/user">
+                <Menu.Item as={Link} to="/user/home">
                     Home
                 </Menu.Item>
                 <Menu.Item as={Link} to="/user/showaccount">

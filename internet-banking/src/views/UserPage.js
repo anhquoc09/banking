@@ -23,11 +23,15 @@ class UserPage extends React.Component {
 UserPage.propsTypes = {
     isAuthenticated: PropsTypes.bool.isRequired,
     logout: PropsTypes.func.isRequired,
+    location: PropsTypes.shape({
+        pathname: PropsTypes.string.isRequired
+    }).isRequired
 };
 
 function mapStateToProps(state) {
     return {
         user: state.user.user,
+        refreshToken: state.user.refreshToken,
         isAuthenticated: !!state.user.refreshToken
     }
 }

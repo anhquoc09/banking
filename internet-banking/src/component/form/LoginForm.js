@@ -14,7 +14,8 @@ class LoginForm extends React.Component {
         refreshToken: "",
         accessToken: "",
         loading: false,
-        errors: {}
+        errors: {},
+        isVerified: true,
     };
 
     onChange = e => this.setState({
@@ -25,10 +26,15 @@ class LoginForm extends React.Component {
         const errors = this.validate(this.state.data);
         this.setState({errors});
         if (Object.keys(errors).length === 0) {
-            this.setState({loading: true});
-            this.props
-                .submit(this.state.data)
-                .catch(err => this.setState({errors: {msg: err.response.data.msg}, loading: false}));
+            if (this.state.isVerified) {
+                this.setState({loading: true});
+                this.props
+                    .submit(this.state.data)
+                    .catch(err => this.setState({errors: {msg: err.response.data.msg}, loading: false}));
+
+            } else {
+                alert("Please verify that you are a human");
+            }
         }
     };
 
@@ -63,6 +69,7 @@ class LoginForm extends React.Component {
                     />
                     {errors.password && <InlineError text={errors.password}/>}
                 </Form.Field>
+
                 <Button primary>Login</Button>
             </Form>
         );

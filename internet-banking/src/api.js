@@ -14,5 +14,11 @@ export default {
         addMoney: account =>
             axios.post("/userController/addmoney",{account}).then(res=>res.data.account),
 
+        showAccountBank : cmnd =>
+            axios.post("/userController/showaccountbank",{cmnd}).then(res=>res.data.accountBanks),
+
+        addTransaction : transaction =>
+            axios.post("/transactionController/addTransaction",{transaction}).then(res=>res.data.result)
+
     }
 }
