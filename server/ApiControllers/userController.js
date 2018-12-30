@@ -10,11 +10,11 @@ var router = express.Router();
 
 // thêm người dùng
 router.post('/adduser', (req, res) => {
-    var fullName = req.body.fullName;
-    var cmnd = req.body.cmnd;
-    var email = req.body.email;
-    var password = req.body.password;
-    var phoneNumber = req.body.phoneNumber;
+    var fullName = req.body.user.fullname;
+    var cmnd = req.body.user.cmnd;
+    var email = req.body.user.email;
+    var password = req.body.user.password;
+    var phoneNumber = req.body.user.phoneNumber;
     var createDate = moment().format();
 
     userModel.findOne({
@@ -23,7 +23,7 @@ router.post('/adduser', (req, res) => {
         if (err) console.log(err);
         if (user) {
             console.log("user exist !!!");
-            res.json({
+            res.status(400).json({
                 msg: "Username exists, choose another !!!"
             })
         } else {
@@ -40,11 +40,10 @@ router.post('/adduser', (req, res) => {
             user.save(function (err) {
                 if (err) {
                     console.log(err);
-                    res.json({msg: "View error on console log"});
+                    res.status(400).json({msg: "View error on console log"});
                 } else {
-                    userModel.findOne({email: email}, function (err, users) {
-                        console.log(users);
-                        res.json({users: users});
+                    userModel.findOne({email: email}, function (err, user) {
+                        res.json({user: user});
                     })
                 }
             })
@@ -81,7 +80,7 @@ router.post('/login', (req, res) => {
                 refreshToken: rfToken,
             })
         }else{
-            res.json({
+            res.status(400).json({
                 auth: false,
                 msg: "Email or Password not true !!!",
             });
@@ -93,11 +92,12 @@ router.post('/login', (req, res) => {
 
 //add account bank user
 router.post('/addaccountbank', (req, res) => {
-    var idUser = req.body.idUser;
-    var accountBankNo = req.body.accountBankNo;
-    var money = req.body.money;
+    var cmnd = req.body.account.cmnd;
+    var accountBankNo = req.body.account.accountBankNo;
+    var money = req.body.account.money;
+    var createDate = moment().format();
 
-    userModel.findOne({idUser: idUser}, function (err, result) {
+    userModel.findOne({idUser: cmnd}, function (err, result) {
         if (err) {
             console.log(err);
             res.statusCode = 401;
@@ -109,9 +109,10 @@ router.post('/addaccountbank', (req, res) => {
 
         if (result) {
             const accountBank = new accountBankModel({
-                idUser: idUser,
+                idUser: cmnd,
                 accountBankNo: accountBankNo,
-                money: money
+                money: money,
+                createDate: createDate
             });
 
             accountBank.save(function (err) {
@@ -130,7 +131,7 @@ router.post('/addaccountbank', (req, res) => {
                 });
             })
         } else {
-            res.json({
+            res.status(400).json({
                 result: false,
                 msg: "User not found !!!"
             });
@@ -141,9 +142,10 @@ router.post('/addaccountbank', (req, res) => {
 
 //add money in account bank user
 router.post('/addmoney', (req, res) => {
-    var idUser = req.body.idUser;
-    var accountBankNo = req.body.accountBankNo;
-    var money = req.body.money;
+    var idUser = req.body.account.cmnd;
+    var accountBankNo = req.body.account.accountBankNo;
+    var money = Number(req.body.account.money);
+    console.log(typeof money);
 
     userModel.findOne({idUser: idUser}, function (err, result) {
         if (err) {
@@ -170,19 +172,20 @@ router.post('/addmoney', (req, res) => {
                 }
 
                 if (account) {
+                    var totalmoney = Number(account.money) + money;
                     accountBankModel.findOneAndUpdate({
                         idUser: idUser,
                         accountBankNo: accountBankNo
                     }, {
                         $set: {
-                            money: account.model + money
+                            money: parseInt(totalmoney)
                         }
                     }, function (err, callback) {
                         if(err){
-                            console.log(err);
+                            console.log("err" + err);
                             res.statusCode = 401;
                             res.json({
-                                msg: "View error on console log !!!",
+                                msg: "View error on console log 123!!!",
                             });
                             return;
                         }
@@ -193,7 +196,7 @@ router.post('/addmoney', (req, res) => {
                         });
                     });
                 } else {
-                    res.json({
+                    res.status(400).json({
                         result: false,
                         err: 2,
                         msg: "Account bank not found !!!"
@@ -201,13 +204,37 @@ router.post('/addmoney', (req, res) => {
                 }
             });
         } else {
-            res.json({
+            res.status(400).json({
                 result: false,
                 err: 1,
                 msg: "User not found !!!",
             });
         }
     });
+});
+
+//show account bank user
+router.post('/showaccountbank',(req,res)=>{
+    var idUser = req.body.cmnd;
+
+    accountBankModel.find({idUser: idUser},function(err,accountBanks){
+        if(err){
+            res.statusCode = 401;
+            res.json({
+                msg: "View error on console log "
+            });
+        }
+
+        if(accountBanks){
+            res.json({
+                accountBanks
+            })
+        }else {
+            res.status(400).json({
+                msg: "Please add a account bank !!!"
+            })
+        }
+    })
 });
 
 module.exports = router;

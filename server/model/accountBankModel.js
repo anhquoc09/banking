@@ -12,6 +12,9 @@ var accountBankSchema = mongoose.Schema({
     money: {
         type: Number,
         default: 0
+    },
+    createDate: {
+        type: Date
     }
 });
 

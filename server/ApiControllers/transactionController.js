@@ -8,12 +8,11 @@ var router = express.Router();
 
 // thêm 1 giao dich cho idUser
 router.post('/addTransaction', (req, res) => {
-    var idUser = req.body.idUser;
-    var accountBankNo = req.body.accountBankNo;
-    var money = req.body.money;
-    var accountTransferTo = req.body.accountTransferTo;
-    var transferMoney = req.body.transferMoney;
-    var notes = req.body.notes;
+    var idUser = req.body.transaction.idUser;
+    var accountBankNo = req.body.transaction.accountBankNo;
+    var accountTransferTo = req.body.transaction.accountTransferTo;
+    var transferMoney = req.body.transaction.transferMoney;
+    var notes = req.body.transaction.notes;
 
     accountBankModel.findOne({
         idUser: idUser,
@@ -70,7 +69,7 @@ router.post('/addTransaction', (req, res) => {
                                 const transaction = new transactionModel({
                                     idUser: idUser,
                                     accountTransferTo: accountTransferTo,
-                                    transferMoney: money,
+                                    transferMoney: result.money,
                                     notes: notes,
                                     createDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                                     deleteFlag: false,
@@ -92,12 +91,16 @@ router.post('/addTransaction', (req, res) => {
                                 });
                             });
                         } else {
-                            res.json({
+                            res.status(400).json({
                                 result: false,
                                 msg: "Account bank user receive not found !!!"
                             });
                         }
                     })
+                })
+            } else {
+                res.status(400).json({
+                    msg: "Số dư không đủ để thực hiện giao dịch"
                 })
             }
         }

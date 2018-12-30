@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var accountBank = require('./accountBankModel');
 
 var userSchema = mongoose.Schema({
 
