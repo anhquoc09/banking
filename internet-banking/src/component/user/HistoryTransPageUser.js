@@ -2,31 +2,24 @@ import React from 'react';
 import PropsTypes from 'prop-types';
 import {connect} from 'react-redux';
 import NavbarUser from './navbarUser';
-import TransactionForm from '../form/TransactionForm';
-import {addTransaction} from '../../actions/auth';
+import HistoryTransForm from '../form/HistoryTransForm';
 
-class MoveMoneyPageUser extends React.Component {
-    submit = dataTrans =>
-        this.props.addTransaction(dataTrans).then(()=>{
-            this.props.history.push("/user/home")
-        });
-
+class HistoryTransPageUser extends React.Component {
     render() {
         return (
             <div className="ui container">
                 <NavbarUser/>
-                <TransactionForm submit={this.submit}/>
+                <HistoryTransForm/>
             </div>
         )
     }
 }
 
-MoveMoneyPageUser.propsTypes = {
+HistoryTransPageUser.propsTypes = {
     isAuthenticated: PropsTypes.bool.isRequired,
     history: PropsTypes.shape({
         push: PropsTypes.func.isRequired
     }).isRequired,
-    addTransaction: PropsTypes.func.isRequired
 };
 
 function mapStateToProps(state) {
@@ -36,4 +29,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, {addTransaction})(MoveMoneyPageUser);
+export default connect(mapStateToProps,)(HistoryTransPageUser);
