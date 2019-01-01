@@ -237,4 +237,30 @@ router.post('/showaccountbank',(req,res)=>{
     })
 });
 
+//tìm tài khoản của người dùng
+router.post('/findAccount',(req,res)=>{
+   var idUser = req.body.idUser;
+   accountBankModel.find({
+       idUser: idUser
+   },function(err,result){
+       if(err){
+           console.log(err);
+           res.statusCode = 401;
+           res.json({
+               msg: "View error on console log !!!",
+           });
+       }
+
+       if(result){
+           res.json({
+               accountBanks: result,
+           });
+       }else{
+           res.status(400).json({
+               msg: "User not account !!!",
+           })
+       }
+   })
+});
+
 module.exports = router;

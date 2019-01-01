@@ -6,6 +6,10 @@ var transactionSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    accountBankNo: {
+      type: String,
+      required: true,
+    },
     accountTransferTo: {
         type: String,
         required: true,

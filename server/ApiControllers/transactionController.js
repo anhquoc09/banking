@@ -11,7 +11,7 @@ router.post('/addTransaction', (req, res) => {
     var idUser = req.body.transaction.idUser;
     var accountBankNo = req.body.transaction.accountBankNo;
     var accountTransferTo = req.body.transaction.accountTransferTo;
-    var transferMoney = req.body.transaction.transferMoney;
+    var transferMoney = Number(req.body.transaction.transferMoney);
     var notes = req.body.transaction.notes;
 
     accountBankModel.findOne({
@@ -61,15 +61,16 @@ router.post('/addTransaction', (req, res) => {
                                     console.log(err);
                                     res.statusCode = 401;
                                     res.json({
-                                        msg: "View error on console log !!!",
+                                        msg: "View error on console log 123!!!",
                                     });
                                     return;
                                 }
 
                                 const transaction = new transactionModel({
                                     idUser: idUser,
+									accountBankNo: accountBankNo,
                                     accountTransferTo: accountTransferTo,
-                                    transferMoney: result.money,
+                                    transferMoney: transferMoney,
                                     notes: notes,
                                     createDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                                     deleteFlag: false,
@@ -80,7 +81,7 @@ router.post('/addTransaction', (req, res) => {
                                         console.log(err);
                                         res.statusCode = 401;
                                         res.json({
-                                            msg: "View error on console log !!!",
+                                            msg: "View error on console log!!!",
                                         });
                                         return;
                                     }
@@ -110,10 +111,10 @@ router.post('/addTransaction', (req, res) => {
 
 //hiển thị lịch sử giao dich người dùng
 router.post('/historyTransaction', (req, res) => {
-    var idUser = req.body.idUser;
+    var accountBankNo = req.body.accountBankNo;
 
     transactionModel.find({
-        idUser: idUser
+        accountBankNo: accountBankNo
     }, function (err, result) {
         if (err) {
             console.log(err);
