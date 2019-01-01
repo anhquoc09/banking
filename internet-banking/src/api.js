@@ -18,7 +18,12 @@ export default {
             axios.post("/userController/showaccountbank",{cmnd}).then(res=>res.data.accountBanks),
 
         addTransaction : transaction =>
-            axios.post("/transactionController/addTransaction",{transaction}).then(res=>res.data.result)
+            axios.post("/transactionController/addTransaction",{transaction}).then(res=>res.data.result),
 
+        findAccount : idUser =>
+            axios.post("/userController/findAccount",{idUser}).then(res=>res.data.accountBanks),
+
+        showHistoryTrans: accountBankNo =>
+            axios.post("/transactionController/historyTransaction",{accountBankNo}).then(res => res.data.transactions)
     }
 }

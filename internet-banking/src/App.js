@@ -8,6 +8,7 @@ import UserRoute from "./component/routes/UserRoute";
 import HomePageUser from "./component/user/HomePageUser";
 import ShowAccountBankPageUser from "./component/user/ShowAccountBankPageUser";
 import MoveMoneyPageUser from "./component/user/MoveMoneyPageUser";
+import HistoryTransPageUser from "./component/user/HistoryTransPageUser";
 import AdminRoute from "./component/routes/AdminRoute";
 import HomePageAdmin from "./component/admin/HomePageAdmin";
 import AddUserPageAdmin from "./component/admin/AddUserPageAdmin";
@@ -21,6 +22,7 @@ const App = ({location}) => (
         <UserRoute location={location} path="/user/home" exact component={HomePageUser}/>
         <UserRoute location={location} path="/user/showaccount" exact component={ShowAccountBankPageUser}/>
         <UserRoute location={location} path="/user/movemoney" exact component={MoveMoneyPageUser}/>
+        <UserRoute location={location} path="/user/historytrans" exact component={HistoryTransPageUser}/>
 
         <AdminRoute location={location} path="/admin" exact component={AdminPage}/>
         <AdminRoute location={location} path="/admin/home" exact component={HomePageAdmin}/>

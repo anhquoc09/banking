@@ -21,6 +21,9 @@ class NavbarUser extends React.Component {
                 <Menu.Item as={Link} to="/user/movemoney">
                     Chuyển khoản
                 </Menu.Item>
+                <Menu.Item as={Link} to="/user/historytrans">
+                    Lịch sử giao dịch
+                </Menu.Item>
 
                 <Menu.Menu position="right">
                     <Dropdown  trigger={<Image avatar src={gravatarUrl(user.email)} />}>
