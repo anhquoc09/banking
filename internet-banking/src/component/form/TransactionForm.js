@@ -4,8 +4,8 @@ import {Form, Button, Message} from 'semantic-ui-react';
 import InlineError from '../messages/InlineError';
 
 class TransactionForm extends React.Component {
-    state={
-        dataTrans : {
+    state = {
+        dataTrans: {
             idUser: "",
             accountBankNo: "",
             accountTransferTo: "",
@@ -19,7 +19,7 @@ class TransactionForm extends React.Component {
         dataTrans: {...this.state.dataTrans, [e.target.name]: e.target.value}
     });
 
-    onSubmit = () =>{
+    onSubmit = () => {
         const errors = this.validate(this.state.dataTrans);
         this.setState({errors});
         this.props
@@ -29,20 +29,20 @@ class TransactionForm extends React.Component {
 
     validate = data => {
         const errors = {};
-        if(!data.idUser) errors.idUser = "Can't be blank";
-        if(!data.accountBankNo) errors.accountBankNo = "Can't be blank";
-        if(!data.accountTransferTo){
+        if (!data.idUser) errors.idUser = "Can't be blank";
+        if (!data.accountBankNo) errors.accountBankNo = "Can't be blank";
+        if (!data.accountTransferTo) {
             errors.accountTransferTo = "Can't be blank";
-        } else if (data.accountTransferTo === data.accountBankNo){
+        } else if (data.accountTransferTo === data.accountBankNo) {
             errors.accountTransferTo = "Số tài khoản chuyển phải khác số tài khoản của bạn !!!";
         }
-        if(!data.transferMoney) errors.transferMoney = "Can't be blank";
-        if(!data.notes) errors.notes = "Can't be blank";
+        if (!data.transferMoney) errors.transferMoney = "Can't be blank";
+        if (!data.notes) errors.notes = "Can't be blank";
         return errors;
     };
 
     render() {
-        const {dataTrans,errors} = this.state;
+        const {dataTrans, errors} = this.state;
         return (
             <Form onSubmit={this.onSubmit}>
                 {errors.msg && (
