@@ -57,8 +57,8 @@ router.post('/login', (req, res) => {
     userModel.findOne({
         email: req.body.email,
         password: md5_pwd
-    },function (err,result) {
-        if(err){
+    }, function (err, result) {
+        if (err) {
             console.log(err);
             res.statusCode = 401;
             res.json({
@@ -67,11 +67,11 @@ router.post('/login', (req, res) => {
             return;
         }
 
-        if(result){
+        if (result) {
             var acToken = token.generateAccessToken(result);
             var rfToken = token.generateRefreshToken();
 
-            token.updateRefreshToken(result.idUser,rfToken);
+            token.updateRefreshToken(result.idUser, rfToken);
 
             res.json({
                 auth: true,
@@ -79,7 +79,7 @@ router.post('/login', (req, res) => {
                 accessToken: acToken,
                 refreshToken: rfToken,
             })
-        }else{
+        } else {
             res.status(400).json({
                 auth: false,
                 msg: "Email or Password not true !!!",
@@ -181,7 +181,7 @@ router.post('/addmoney', (req, res) => {
                             money: parseInt(totalmoney)
                         }
                     }, function (err, callback) {
-                        if(err){
+                        if (err) {
                             console.log("err" + err);
                             res.statusCode = 401;
                             res.json({
@@ -214,22 +214,22 @@ router.post('/addmoney', (req, res) => {
 });
 
 //show account bank user
-router.post('/showaccountbank',(req,res)=>{
+router.post('/showaccountbank', (req, res) => {
     var idUser = req.body.cmnd;
 
-    accountBankModel.find({idUser: idUser},function(err,accountBanks){
-        if(err){
+    accountBankModel.find({idUser: idUser, deleteFlag: 0}, function (err, accountBanks) {
+        if (err) {
             res.statusCode = 401;
             res.json({
                 msg: "View error on console log "
             });
         }
 
-        if(accountBanks){
+        if (accountBanks) {
             res.json({
                 accountBanks
             })
-        }else {
+        } else {
             res.status(400).json({
                 msg: "Please add a account bank !!!"
             })
@@ -238,29 +238,76 @@ router.post('/showaccountbank',(req,res)=>{
 });
 
 //tìm tài khoản của người dùng
-router.post('/findAccount',(req,res)=>{
-   var idUser = req.body.idUser;
-   accountBankModel.find({
-       idUser: idUser
-   },function(err,result){
-       if(err){
-           console.log(err);
-           res.statusCode = 401;
-           res.json({
-               msg: "View error on console log !!!",
-           });
-       }
+router.post('/findAccount', (req, res) => {
+    var idUser = req.body.idUser;
+    accountBankModel.find({
+        idUser: idUser
+    }, function (err, result) {
+        if (err) {
+            console.log(err);
+            res.statusCode = 401;
+            res.json({
+                msg: "View error on console log !!!",
+            });
+        }
 
-       if(result){
-           res.json({
-               accountBanks: result,
-           });
-       }else{
-           res.status(400).json({
-               msg: "User not account !!!",
-           })
-       }
-   })
+        if (result) {
+            res.json({
+                accountBanks: result,
+            });
+        } else {
+            res.status(400).json({
+                msg: "User not account !!!",
+            })
+        }
+    })
 });
+
+//đóng 1 tài khoản của người dùng
+router.post('/closeAccount', (req, res) => {
+    var idUser = req.body.idUser;
+    var accountBankNo = req.body.accountBankNo;
+
+    accountBankModel.findOne({
+        idUser: idUser,
+        accountBankNo: accountBankNo
+    }, function (err, account) {
+        if (err) {
+            console.log(err);
+            res.statusCode = 401;
+            res.json({
+                msg: "View error on console log !!!"
+            })
+        }
+
+        if (account.money <= 0) {
+            accountBankModel.findOneAndUpdate({
+                idUser: idUser,
+                accountBankNo: accountBankNo
+            }, {
+                $set: {
+                    deleteFlag: 1
+                }
+            }, function (err, callback) {
+                if (err) {
+                    console.log(err);
+                    res.statusCode = 401;
+                    res.json({
+                        msg: 'View error on console log !!!'
+                    });
+                }
+                res.json({
+                    result: true,
+                    msg: "Account closed ",
+                });
+            });
+        } else {
+            res.status(400).json({
+                msg: "Tài khoản của bạn còn tiền !!!"
+            })
+        }
+    });
+});
+
 
 module.exports = router;

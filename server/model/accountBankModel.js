@@ -15,6 +15,10 @@ var accountBankSchema = mongoose.Schema({
     },
     createDate: {
         type: Date
+    },
+    deleteFlag: {
+        type: Number,
+        default: 0,
     }
 });
 
