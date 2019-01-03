@@ -68,7 +68,7 @@ router.post('/addTransaction', (req, res) => {
 
                                 const transaction = new transactionModel({
                                     idUser: idUser,
-									accountBankNo: accountBankNo,
+                                    accountBankNo: accountBankNo,
                                     accountTransferTo: accountTransferTo,
                                     transferMoney: transferMoney,
                                     notes: notes,
@@ -137,6 +137,29 @@ router.post('/historyTransaction', (req, res) => {
             });
         }
     });
+});
+
+//Show danh bạ gợi nhớ cho người dùng
+router.post('/getAccountHistory', (req, res) => {
+    transactionModel.aggregate([{$group: {_id: "$accountTransferTo"}}], function (err, accountBanks) {
+        if (err) {
+            res.statusCode = 400;
+            console.log(err);
+            res.json({
+                msg: "View error on console log !!!"
+            });
+        }
+
+        if(accountBanks){
+            res.json({accountBanks});
+        }else
+        {
+            res.status(400).json({
+                msg: "User didn't found !!!",
+            });
+        }
+
+    })
 });
 
 module.exports = router;
