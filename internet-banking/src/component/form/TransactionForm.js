@@ -1,7 +1,9 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
-import {Form, Button, Message} from 'semantic-ui-react';
+import {Form, Button, Message, Input} from 'semantic-ui-react';
 import InlineError from '../messages/InlineError';
+import {connect} from 'react-redux';
+import api from '../../api';
 
 class TransactionForm extends React.Component {
     state = {
@@ -13,6 +15,7 @@ class TransactionForm extends React.Component {
             notes: "",
         },
         errors: {},
+        rememberAccount: [],
     };
 
     onChange = e => this.setState({
@@ -29,7 +32,10 @@ class TransactionForm extends React.Component {
 
     validate = data => {
         const errors = {};
-        if (!data.idUser) errors.idUser = "Can't be blank";
+        console.log(data.accountTransferTo);
+        if (!data.idUser) {
+            errors.idUser = "Can't be blank";
+        }
         if (!data.accountBankNo) errors.accountBankNo = "Can't be blank";
         if (!data.accountTransferTo) {
             errors.accountTransferTo = "Can't be blank";
@@ -41,8 +47,12 @@ class TransactionForm extends React.Component {
         return errors;
     };
 
+    componentDidMount = () => {
+        api.user.getAccountHistory(this.props.user.idUser).then(res => this.setState({rememberAccount: res}));
+    };
+
     render() {
-        const {dataTrans, errors} = this.state;
+        const {dataTrans, errors, rememberAccount} = this.state;
         return (
             <Form onSubmit={this.onSubmit}>
                 {errors.msg && (
@@ -67,20 +77,26 @@ class TransactionForm extends React.Component {
                 </Form.Field>
                 <Form.Field error={!!errors.accountTransferTo}>
                     <label htmlFor="text">Số tài khoản chuyển tiền :</label>
-                    <input type="text" id="accountTransferTo" name="accountTransferTo" placeholder="0123456789100001"
-                           value={dataTrans.accountTransferTo} onChange={this.onChange}
-                    />
+                    <div>
+                        <Input list='accountTransferTo' placeholder='Choose language...' name='accountTransferTo'
+                               onChange={this.onChange}/>
+                        <datalist id='accountTransferTo'>
+                            {rememberAccount.length > 0 && rememberAccount.map(value => (
+                                <option key={value._id} value={value._id}/>
+                            ))}
+                        </datalist>
+                    </div>
                     {errors.accountTransferTo && <InlineError text={errors.accountTransferTo}/>}
                 </Form.Field>
                 <Form.Field error={!!errors.transferMoney}>
-                    <label htmlFor="text">Số tài khoản chuyển tiền :</label>
+                    <label htmlFor="text">Số tiền chuyển :</label>
                     <input type="number" id="transferMoney" name="transferMoney" placeholder="0123456789100001"
                            value={dataTrans.transferMoney} onChange={this.onChange}
                     />
                     {errors.transferMoney && <InlineError text={errors.transferMoney}/>}
                 </Form.Field>
                 <Form.Field error={!!errors.notes}>
-                    <label htmlFor="text">Số tài khoản chuyển tiền :</label>
+                    <label htmlFor="text">Nội dung :</label>
                     <input type="text" id="notes" name="notes" placeholder="0123456789100001"
                            value={dataTrans.notes} onChange={this.onChange}
                     />
@@ -97,4 +113,10 @@ TransactionForm.propTypes = {
     submit: PropsTypes.func.isRequired
 };
 
-export default TransactionForm;
+function mapSateToProps(state) {
+    return {
+        user: state.user.user,
+    }
+}
+
+export default connect(mapSateToProps)(TransactionForm);

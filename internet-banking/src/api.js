@@ -28,5 +28,8 @@ export default {
 
         closeAccount: (idUser, accountBankNo) =>
             axios.post("/userController/closeAccount", {idUser, accountBankNo}).then(res => res.data.result),
+
+        getAccountHistory: idUser =>
+            axios.post("/transactionController/getAccountHistory",{idUser}).then(res=>res.data.accountBanks),
     }
 }
