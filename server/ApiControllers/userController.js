@@ -2,11 +2,42 @@ var express = require('express');
 var userModel = require('../model/userModel'),
     accountBankModel = require('../model/accountBankModel'),
     md5 = require('crypto-js/md5'),
-    moment = require('moment');
+    moment = require('moment'),
+    rfTokenModel = require('../model/refreshTokenModel');
 
 var token = require('../fn/token');
 
 var router = express.Router();
+
+router.post('/updateToken', function (req, res) {
+    const id = req.body.id;
+    const rfToken = req.body.rfToken;
+    console.log(rfToken);
+    rfTokenModel.findOne({idUser: req.body.idUser, refreshToken: rfToken}, function (err, rfTokenM) {
+        if (err) {
+            console.log(err);
+            res.json(err);
+            res.statusCode = 401;
+        } else {
+            if (rfTokenM) {
+                res.json({
+                    msg: error,
+                    auth: false,
+                });
+                res.statusCode = 401
+            } else {
+                userModel.findOne({idUser: idUser}, function (err, userM) {
+                    var acToken = token.generateAccessToken(userM);
+                    res.json({
+                        auth: true,
+                        user: userM,
+                        accessToken: acToken
+                    })
+                })
+            }
+        }
+    })
+});
 
 // thêm người dùng
 router.post('/adduser', (req, res) => {

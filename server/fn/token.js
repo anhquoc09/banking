@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken'),
     refreshToken = require('../model/refreshTokenModel');
 
 const SECRETKEY = 'ANSON';
-const AC_LIFETIME = 30000;
+const AC_LIFETIME = 10;
 
 exports.generateAccessToken = userEntity => {
     var payload = {
