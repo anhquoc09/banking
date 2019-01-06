@@ -1,5 +1,6 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
+import {Segment} from 'semantic-ui-react'
 import {connect} from 'react-redux';
 import NavbarUser from './navbarUser';
 import HistoryTransForm from '../form/HistoryTransForm';
@@ -9,7 +10,9 @@ class HistoryTransPageUser extends React.Component {
         return (
             <div className="ui container">
                 <NavbarUser/>
-                <HistoryTransForm/>
+                <Segment stacked>
+                    <HistoryTransForm/>
+                </Segment>
             </div>
         )
     }

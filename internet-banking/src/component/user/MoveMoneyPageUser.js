@@ -1,5 +1,6 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
+import {Segment} from 'semantic-ui-react';
 import {connect} from 'react-redux';
 import NavbarUser from './navbarUser';
 import TransactionForm from '../form/TransactionForm';
@@ -7,7 +8,7 @@ import {addTransaction} from '../../actions/auth';
 
 class MoveMoneyPageUser extends React.Component {
     submit = dataTrans =>
-        this.props.addTransaction(dataTrans).then(()=>{
+        this.props.addTransaction(dataTrans).then(() => {
             this.props.history.push("/user/verifyotp")
         });
 
@@ -15,7 +16,9 @@ class MoveMoneyPageUser extends React.Component {
         return (
             <div className="ui container">
                 <NavbarUser/>
-                <TransactionForm submit={this.submit}/>
+                <Segment stacked>
+                    <TransactionForm submit={this.submit}/>
+                </Segment>
             </div>
         )
     }

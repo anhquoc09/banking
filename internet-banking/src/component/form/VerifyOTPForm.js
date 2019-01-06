@@ -1,7 +1,7 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {Input, Form, Button, Icon,Message} from 'semantic-ui-react';
+import {Input, Form, Button, Icon, Message, Segment} from 'semantic-ui-react';
 import InlineError from '../messages/InlineError';
 
 class VerifyOTPForm extends React.Component {
@@ -18,8 +18,8 @@ class VerifyOTPForm extends React.Component {
         const errors = this.validate(this.state.otp);
         this.setState({errors});
         this.props
-            .submit(this.state.otp,this.props.user.idUser)
-            .catch(err=>this.setState({errors: {msg: err.response.data.msg}}));
+            .submit(this.state.otp, this.props.user.idUser)
+            .catch(err => this.setState({errors: {msg: err.response.data.msg}}));
     };
 
     validate = data => {
@@ -33,26 +33,28 @@ class VerifyOTPForm extends React.Component {
         return (
             <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}
                  className="ui container">
-                <Form onSubmit={this.onSubmit}>
-                    <h1>Send OTP mail </h1>
-                    <h3>Please fill in your OTP which we sent you email</h3>
-                    {errors.msg && (
-                        <Message negative>
-                            <Message.Header>Something went wrong</Message.Header>
-                            <p>{errors.msg}</p>
-                        </Message>
-                    )}
-                    <Form.Field error={!!errors.otp}>
-                        <label htmlFor="text">Your OTP : </label>
-                        <Input icon="key" iconPosition='left' type="number" placeholder="your OTP"
-                               value={otp} onChange={this.onChange}/>
-                        {errors.otp && <InlineError text={errors.otp}/>}
-                    </Form.Field>
-                    <Button primary icon labelPosition='left'>
-                        <Icon name="key"/>
-                        Xác nhận
-                    </Button>
-                </Form>
+                <Segment stacked>
+                    <Form style={{height: '300px', width: '600px'}} onSubmit={this.onSubmit}>
+                        <h1>Send OTP mail </h1>
+                        <h3>Please fill in your OTP which we sent you email</h3>
+                        {errors.msg && (
+                            <Message negative>
+                                <Message.Header>Something went wrong</Message.Header>
+                                <p>{errors.msg}</p>
+                            </Message>
+                        )}
+                        <Form.Field error={!!errors.otp}>
+                            <label htmlFor="text">Your OTP : </label>
+                            <Input icon="key" iconPosition='left' type="number" placeholder="your OTP"
+                                   value={otp} onChange={this.onChange}/>
+                            {errors.otp && <InlineError text={errors.otp}/>}
+                        </Form.Field>
+                        <Button primary icon labelPosition='left'>
+                            <Icon name="key"/>
+                            Xác nhận
+                        </Button>
+                    </Form>
+                </Segment>
             </div>
         )
     }
@@ -63,7 +65,7 @@ VerifyOTPForm.propTypes = {
 };
 
 function mapStateToProps(state) {
-    return{
+    return {
         user: state.user.user,
     }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
-import {Menu,Icon} from 'semantic-ui-react';
+import {Menu,Icon,Segment} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import * as actions from '../../actions/auth';
 import {connect} from 'react-redux';
@@ -11,7 +11,7 @@ class NavbarAdmin extends React.Component {
     render() {
         const {user, logout} = this.props;
         return (
-            <div>
+            <Segment stacked>
                 <Menu secondary pointing icon='labeled'>
                     <Menu.Item name='home' as={Link} to="/admin/home">
                         <Icon name='home'/>
@@ -37,7 +37,7 @@ class NavbarAdmin extends React.Component {
                         </Menu.Item>
                     </Menu.Menu>
                 </Menu>
-            </div>
+            </Segment>
         )
     }
 }

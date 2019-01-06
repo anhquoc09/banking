@@ -1,24 +1,21 @@
 import React from 'react';
 import LoginForm from '../component/form/LoginForm';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { login } from '../actions/auth';
+import {connect} from 'react-redux';
+import {login} from '../actions/auth';
 
 class HomePage extends React.Component {
     submit = data => this.props.login(data).then(() => {
         if (this.props.user.permission === 0) {
             this.props.history.push("/user/home")
-        }else{
+        } else {
             this.props.history.push("/admin/home")
         }
     });
 
     render() {
         return (
-            <div  className="ui container">
-                <h1>QS BANK</h1>
-                <LoginForm submit={this.submit}/>
-            </div>
+            <LoginForm submit={this.submit}/>
         );
     };
 }

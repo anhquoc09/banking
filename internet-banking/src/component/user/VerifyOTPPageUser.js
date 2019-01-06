@@ -5,8 +5,8 @@ import PropsTypes from "prop-types";
 import {sendOtp} from '../../actions/auth';
 
 class VerifyOTPPageUser extends React.Component {
-    submit = (otp,idUser) =>
-        this.props.sendOtp(otp,idUser).then(()=>{
+    submit = (otp, idUser) =>
+        this.props.sendOtp(otp, idUser).then(() => {
             this.props.history.push("/user/movemoney")
         });
 
@@ -32,4 +32,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps,{sendOtp})(VerifyOTPPageUser);
+export default connect(mapStateToProps, {sendOtp})(VerifyOTPPageUser);

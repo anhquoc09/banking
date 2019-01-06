@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.css'
 import PropsTypes from 'prop-types';
 import {Route} from "react-router-dom";
 import HomePage from "./views/HomePage";

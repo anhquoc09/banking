@@ -1,6 +1,7 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
 import {connect} from 'react-redux';
+import {Segment} from 'semantic-ui-react';
 import NavbarAdmin from './navbarAdmin';
 import AddMoneyForm from '../form/AddMoneyForm';
 import {addMoney} from '../../actions/auth';
@@ -12,10 +13,12 @@ class AddMoneyPageAdmin extends React.Component {
         });
 
     render() {
-        return(
+        return (
             <div className="ui container">
                 <NavbarAdmin/>
-                <AddMoneyForm submit={this.submit}/>
+                <Segment stacked>
+                    <AddMoneyForm submit={this.submit}/>
+                </Segment>
             </div>
         )
     }

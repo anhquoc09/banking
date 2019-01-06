@@ -47,11 +47,13 @@ export const userSendOTP = (user,result)=>({
 export const login = credentials => dispatch =>
     api.user.login(credentials.email, credentials.password).then(user => {
         localStorage.refreshToken = user.refreshToken;
+        localStorage.accessToken = user.accessToken;
+        localStorage.idUser = user.user.idUser;
         userLoggin = user;
         dispatch(userLoggedIn(user))
     });
 
-export const regist = credentials => dispatch =>
+export const regist = (credentials) => dispatch =>
     api.user.signup(credentials).then(user => {
         dispatch(adduser(userLoggin));
     });
