@@ -1,4 +1,4 @@
-import {USER_LOGGED_IN, USER_LOGGED_OUT, ADD_USER, ADD_ACCOUNT_BANK, ADD_MONEY, ADD_TRANSACTION, CLOSE_ACCOUNT_BANK} from '../types';
+import {USER_LOGGED_IN, USER_LOGGED_OUT, ADD_USER, ADD_ACCOUNT_BANK, ADD_MONEY, ADD_TRANSACTION, CLOSE_ACCOUNT_BANK,SEND_OTP_EMAIL} from '../types';
 import api from '../api';
 
 let userLoggin = {};
@@ -38,6 +38,12 @@ export const userCloseAccount = (user,result) => ({
     result
 });
 
+export const userSendOTP = (user,result)=>({
+    type: SEND_OTP_EMAIL,
+    user,
+    result
+});
+
 export const login = credentials => dispatch =>
     api.user.login(credentials.email, credentials.password).then(user => {
         localStorage.refreshToken = user.refreshToken;
@@ -73,5 +79,10 @@ export const addTransaction = dataTransaction => dispatch =>
 export const closeAccount = (idUser,accountBankNo) =>  dispatch =>
     api.user.closeAccount(idUser,accountBankNo).then(res=>{
        dispatch(userCloseAccount(userLoggin,res.result));
+    });
+
+export const sendOtp = (otp,idUser) => dispatch =>
+    api.user.sendOtp(otp,idUser).then(res=>{
+        dispatch(userSendOTP(userLoggin,res.result));
     });
 

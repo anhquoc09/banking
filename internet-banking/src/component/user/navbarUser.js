@@ -1,38 +1,38 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
-import {Menu,Dropdown,Image} from 'semantic-ui-react';
+import {Menu,Icon} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import * as actions from '../../actions/auth';
 import {connect} from 'react-redux';
-import gravatarUrl from 'gravatar-url';
 
 class NavbarUser extends React.Component {
     render() {
         const {user, logout} = this.props;
 
         return (
-            <Menu secondary pointing>
+            <Menu secondary pointing icon='labeled'>
                 <Menu.Item as={Link} to="/user/home">
+                    <Icon name='home'/>
                     Home
                 </Menu.Item>
                 <Menu.Item as={Link} to="/user/showaccount">
+                    <Icon name='user'/>
                     Xem Tài Khoản
                 </Menu.Item>
                 <Menu.Item as={Link} to="/user/movemoney">
+                    <Icon name='money bill alternate outline'/>
                     Chuyển khoản
                 </Menu.Item>
                 <Menu.Item as={Link} to="/user/historytrans">
+                    <Icon name='history'/>
                     Lịch sử giao dịch
                 </Menu.Item>
 
                 <Menu.Menu position="right">
-                    <Dropdown  trigger={<Image avatar src={gravatarUrl(user.email)} />}>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={()=>logout()}>
-                                Thoát
-                            </Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                    <Menu.Item onClick={()=>logout()}>
+                        <Icon name='log out'/>
+                        Thoát({user.fullname})
+                    </Menu.Item>
                 </Menu.Menu>
             </Menu>
         )

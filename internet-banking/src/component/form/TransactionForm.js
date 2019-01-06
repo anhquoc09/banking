@@ -32,7 +32,6 @@ class TransactionForm extends React.Component {
 
     validate = data => {
         const errors = {};
-        console.log(data.accountTransferTo);
         if (!data.idUser) {
             errors.idUser = "Can't be blank";
         }

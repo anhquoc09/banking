@@ -31,5 +31,8 @@ export default {
 
         getAccountHistory: idUser =>
             axios.post("/transactionController/getAccountHistory",{idUser}).then(res=>res.data.accountBanks),
+
+        sendOtp: (otp,idUser) =>
+            axios.post("/transactionController/sendOtp",{otp,idUser}).then(res=>res.data.result),
     }
 }

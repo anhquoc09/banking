@@ -8,7 +8,7 @@ import {addTransaction} from '../../actions/auth';
 class MoveMoneyPageUser extends React.Component {
     submit = dataTrans =>
         this.props.addTransaction(dataTrans).then(()=>{
-            this.props.history.push("/user/home")
+            this.props.history.push("/user/verifyotp")
         });
 
     render() {

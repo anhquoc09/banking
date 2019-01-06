@@ -1,10 +1,9 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
-import {Menu, Dropdown, Image} from 'semantic-ui-react';
+import {Menu,Icon} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import * as actions from '../../actions/auth';
 import {connect} from 'react-redux';
-import gravatarUrl from 'gravatar-url';
 
 class NavbarAdmin extends React.Component {
     state={activeName:'home'};
@@ -13,28 +12,29 @@ class NavbarAdmin extends React.Component {
         const {user, logout} = this.props;
         return (
             <div>
-                <Menu secondary pointing>
+                <Menu secondary pointing icon='labeled'>
                     <Menu.Item name='home' as={Link} to="/admin/home">
+                        <Icon name='home'/>
                         Home
                     </Menu.Item>
                     <Menu.Item as={Link} to="/admin/adduser">
+                        <Icon name='add user'/>
                         Thêm người dùng
                     </Menu.Item>
                     <Menu.Item name='addacount' as={Link} to="/admin/addaccount">
+                        <Icon name='add square'/>
                         Thêm Tài Khoản
                     </Menu.Item>
                     <Menu.Item name='addmoney' as={Link} to="/admin/addmoney">
+                        <Icon name='money bill alternate'/>
                         Nạp tiền
                     </Menu.Item>
 
                     <Menu.Menu position="right">
-                        <Dropdown trigger={<Image avatar src={gravatarUrl(user.email)}/>}>
-                            <Dropdown.Menu>
-                                <Dropdown.Item onClick={() => logout()}>
-                                    Thoát
-                                </Dropdown.Item>
-                            </Dropdown.Menu>
-                        </Dropdown>
+                        <Menu.Item onClick={()=>logout()}>
+                            <Icon name='log out'/>
+                            Thoát({user.fullname})
+                        </Menu.Item>
                     </Menu.Menu>
                 </Menu>
             </div>
