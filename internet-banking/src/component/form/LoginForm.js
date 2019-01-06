@@ -1,6 +1,7 @@
 import React from 'react';
 import PropsTypes from 'prop-types';
-import {Form, Button, Message, Segment} from "semantic-ui-react";
+import {Form, Button, Message, Segment,Input} from "semantic-ui-react";
+import Recaptcha from 'react-recaptcha';
 import Validator from 'validator';
 import InlineError from "../messages/InlineError";
 
@@ -45,6 +46,14 @@ class LoginForm extends React.Component {
         return errors;
     };
 
+    recaptchaLoaded = () => {
+        console.log("catcha loaded successfully");
+    };
+
+    verifyCallback = () => {
+        this.setState({isVerified: true})
+    };
+
     render() {
         const {data, errors, loading} = this.state;
         return (
@@ -67,19 +76,24 @@ class LoginForm extends React.Component {
                         )}
                         <Form.Field error={!!errors.email}>
                             <label htmlFor="email">Email</label>
-                            <input type="email" id="email" name="email" placeholder="example@example.com"
+                            <Input type="email" icon={'mail'} id="email" name="email" placeholder="example@example.com"
                                    value={data.email} onChange={this.onChange}
                             />
                             {errors.email && <InlineError text={errors.email}/>}
                         </Form.Field>
                         <Form.Field error={!!errors.password}>
                             <label htmlFor="password">Password</label>
-                            <input type="password" id="password" name="password" placeholder="fill password !!!"
+                            <Input type="password" icon={'key'} id="password" name="password" placeholder="fill password !!!"
                                    value={data.password} onChange={this.onChange}
                             />
                             {errors.password && <InlineError text={errors.password}/>}
                         </Form.Field>
-
+                        <Recaptcha
+                            sitekey="6Ld1pIUUAAAAAN6-ntR1wmaaSrq4_7TNXqfU3qEU"
+                            render="explicit"
+                            onloadCallback={this.recaptchaLoaded}
+                            verifyCallback={this.verifyCallback}
+                        />
                         <Button primary>Login</Button>
                     </Form>
                 </Segment>
